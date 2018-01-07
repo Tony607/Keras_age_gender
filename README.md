@@ -31,5 +31,5 @@ python realtime_demo.py
 When you use it for the first time , weights are downloaded and stored in **./pretrained_models** folder.
 Or you can download it directly from
 ```
-https://www.dropbox.com/s/rf8hgoev8uqjv3z/weights.18-4.06.hdf5
+https://github.com/Tony607/Keras_age_gender/releases/download/V1.0/weights.18-4.06.hdf5
 ```

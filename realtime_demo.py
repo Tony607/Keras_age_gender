@@ -14,7 +14,7 @@ class FaceCV(object):
     Singleton class for face recongnition task
     """
     CASE_PATH = ".\\pretrained_models\\haarcascade_frontalface_alt.xml"
-    WRN_WEIGHTS_PATH = "https://www.dropbox.com/s/rf8hgoev8uqjv3z/weights.18-4.06.hdf5"
+    WRN_WEIGHTS_PATH = "https://github.com/Tony607/Keras_age_gender/releases/download/V1.0/weights.18-4.06.hdf5"
 
 
     def __new__(cls, weight_file=None, depth=16, width=8, face_size=64):
