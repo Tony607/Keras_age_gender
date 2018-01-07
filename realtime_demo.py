@@ -7,13 +7,14 @@ from time import sleep
 import numpy as np
 import argparse
 from wide_resnet import WideResNet
-
+from keras.utils.data_utils import get_file
 
 class FaceCV(object):
     """
     Singleton class for face recongnition task
     """
     CASE_PATH = ".\\pretrained_models\\haarcascade_frontalface_alt.xml"
+    WRN_WEIGHTS_PATH = "https://www.dropbox.com/s/rf8hgoev8uqjv3z/weights.18-4.06.hdf5"
 
 
     def __new__(cls, weight_file=None, depth=16, width=8, face_size=64):
@@ -21,12 +22,14 @@ class FaceCV(object):
             cls.instance = super(FaceCV, cls).__new__(cls)
         return cls.instance
 
-    def __init__(self, weight_file=None, depth=16, width=8, face_size=64):
+    def __init__(self, depth=16, width=8, face_size=64):
         self.face_size = face_size
         self.model = WideResNet(face_size, depth=depth, k=width)()
-        if not weight_file:
-            weight_file = os.path.join(".//pretrained_models", "weights.18-4.06.hdf5")
-        self.model.load_weights(weight_file)
+        model_dir = os.path.join(os.getcwd(), "pretrained_models").replace("//", "\\")
+        fpath = get_file('weights.18-4.06.hdf5',
+                         self.WRN_WEIGHTS_PATH,
+                         cache_subdir=model_dir)
+        self.model.load_weights(fpath)
 
     @classmethod
     def draw_label(cls, image, point, label, font=cv2.FONT_HERSHEY_SIMPLEX,
@@ -119,8 +122,7 @@ def get_args():
     parser = argparse.ArgumentParser(description="This script detects faces from web cam input, "
                                                  "and estimates age and gender for the detected faces.",
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("--weight_file", type=str, default=None,
-                        help="path to weight file (e.g. weights.18-4.06.hdf5)")
+
     parser.add_argument("--depth", type=int, default=16,
                         help="depth of network")
     parser.add_argument("--width", type=int, default=8,
@@ -132,9 +134,8 @@ def main():
     args = get_args()
     depth = args.depth
     width = args.width
-    weight_file = args.weight_file
 
-    face = FaceCV(weight_file=weight_file,depth=depth, width=width)
+    face = FaceCV(depth=depth, width=width)
 
     face.detect_face()
 

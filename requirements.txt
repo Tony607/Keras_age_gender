@@ -1,0 +1,4 @@
+numpy==1.13.3+mkl
+Keras==2.0.8
+opencv==1.0.1
+opencv-python==3.3.0+contrib

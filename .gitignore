@@ -103,5 +103,5 @@ ENV/
 /data/
 /models/
 /checkpoints/
-/pretrained_models/
+*.hdf5
 .DS_Store
