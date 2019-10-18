@@ -1,4 +1,3 @@
-# This code is imported from the following project: https://github.com/asmith26/wide_resnets_keras
 
 import logging
 import sys
@@ -35,11 +34,7 @@ class WideResNet:
     # Wide residual network http://arxiv.org/abs/1605.07146
     def _wide_basic(self, n_input_plane, n_output_plane, stride):
         def f(net):
-            # format of conv_params:
-            #               [ [kernel_size=("kernel width", "kernel height"),
-            #               strides="(stride_vertical,stride_horizontal)",
-            #               padding="same" or "valid"] ]
-            # B(3,3): orignal <<basic>> block
+           
             conv_params = [[3, 3, stride, "same"],
                            [3, 3, (1, 1), "same"]]
 
@@ -74,10 +69,7 @@ class WideResNet:
                                           kernel_regularizer=l2(self._weight_decay),
                                           use_bias=self._use_bias)(convs)
 
-            # Shortcut Connection: identity function or 1x1 convolutional
-            #  (depends on difference between input & output shape - this
-            #   corresponds to whether we are using the first block in each
-            #   group; see _layer() ).
+            
             if n_input_plane != n_output_plane:
                 shortcut = Conv2D(n_output_plane, kernel_size=(1, 1),
                                          strides=stride,
