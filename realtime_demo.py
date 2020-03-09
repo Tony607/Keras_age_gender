@@ -7,7 +7,7 @@ from time import sleep
 import numpy as np
 import argparse
 from wide_resnet import WideResNet
-from keras.utils.data_utils import get_file
+from tensorflow.keras.utils import get_file
 
 class FaceCV(object):
     """
